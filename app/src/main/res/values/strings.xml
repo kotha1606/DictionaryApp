@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Project004</string>
+    <string name="enter_text_here">Enter text here</string>
+    <string name="search">search</string>
+    <string name="sound">sound</string>
+    <string name="word">word</string>
 </resources>
