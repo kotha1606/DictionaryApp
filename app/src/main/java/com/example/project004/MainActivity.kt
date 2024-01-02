@@ -3,6 +3,7 @@ package com.example.project004
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             runOnUiThread() {
                 setInProgress(false)
                 response.body()?.first().let {
-                    setui(it!!)
+                    Log.i("Api",it.toString())
                 }
             }
         }
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         binding.sound.setOnClickListener(){
             val media=MediaPlayer()
             media.setDataSource(url)
+            media.prepare()
             media.start()
         }
         adapter.updateData(it.meanings)
