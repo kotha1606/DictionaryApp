@@ -19,8 +19,7 @@ class MainActivity : AppCompatActivity() {
             runOnUiThread {
 
                 response.body()?.first()?.let{
-                    binding.hello.text= it.phonetic
-
+                    binding.hello.text= it.phonetics[1].toString()
                 }
             }
         }
