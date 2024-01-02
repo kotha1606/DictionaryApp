@@ -4,4 +4,8 @@
     <string name="search">search</string>
     <string name="sound">sound</string>
     <string name="word">word</string>
+    <string name="todo">TODO</string>
+    <string name="antonyms">Antonyms :</string>
+    <string name="definations">Definations :</string>
+    <string name="synonyms">Synonyms :</string>
 </resources>

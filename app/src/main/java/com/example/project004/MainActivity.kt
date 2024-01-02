@@ -3,6 +3,7 @@ package com.example.project004
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -13,18 +14,18 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
-    lateinit var adapter:MeaningAdapter
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var adapter:MeaningAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        binding.sound.visibility=View.INVISIBLE
         binding.searchBtn.setOnClickListener {
-            var word = binding.etTxt.text.toString()
+            val word = binding.etTxt.text.toString()
             hideKeyboard(binding.etTxt)
-            if (word.isNullOrBlank()) {
+            if (word.isBlank()) {
                 binding.etTxt.error = "Please enter word to search"
             } else {
                 callApi(word)
@@ -41,27 +42,42 @@ class MainActivity : AppCompatActivity() {
         setInProgress(true)
         GlobalScope.launch {
             val response = RetrofitInstance.apiInterface.dictcall(word)
-            runOnUiThread() {
+            runOnUiThread {
                 setInProgress(false)
-                response.body()?.first().let {
-                    setui(it!!)
+                response.body()?.first()?.let {
+                    setUi(it)
                 }
             }
         }
     }
-    private fun setui(it:DictmodelItem) {
+    private fun setUi(it:WordResult) {
         binding.word.text = it.word
-        binding.phonetic.text = it.phonetic
-        var url=it.phonetics.first().audio
-        binding.sound.setOnClickListener(){
-            val media=MediaPlayer()
-            media.setDataSource(url)
-            media.start()
+
+        val phono= it.phonetic.toString()
+             Log.i("ApiTag",phono)
+            binding.phonetic.text =phono
+
+        val url = it.phonetics.firstOrNull { phonetic -> phonetic.audio.isNotEmpty() }?.audio
+        binding.sound.visibility=View.VISIBLE
+        binding.sound.setOnClickListener {
+            if (!url.isNullOrBlank()) {
+                try {
+                    val media = MediaPlayer()
+                    media.setDataSource(url)
+                    media.prepare()
+                    media.start()
+                } catch (e: Exception) {
+                    Log.i("ApiTag", url)
+                    Log.e("ApiTag", "Error ${e.localizedMessage}")
+                }
+            } else {
+                Log.i("ApiTag", "No audio URL found.")
+            }
         }
         adapter.updateData(it.meanings)
-
-
     }
+
+
     private fun setInProgress(inprogress: Boolean) {
         if (inprogress) {
             binding.progressBar.visibility = View.VISIBLE

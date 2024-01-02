@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="16dp"
+    android:layout_marginVertical="2dp"
     android:background="@drawable/bg_et"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -22,7 +23,7 @@
         android:layout_marginTop="8dp"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:text="Definations : "
+        android:text="@string/definations"
         android:id="@+id/definationTitleTv"
         />
     <TextView
@@ -37,7 +38,7 @@
         android:layout_marginTop="8dp"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:text="Synonyms : "
+        android:text="@string/synonyms"
         android:id="@+id/synonysTitleTv"
         />
     <TextView
@@ -51,13 +52,13 @@
         android:layout_marginTop="8dp"
         android:textStyle="bold"
         android:textSize="16sp"
-        android:text="Antonyms : "
+        android:text="@string/antonyms"
         android:id="@+id/antonymsTitleTv"
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="1 defination \n\n 2 another \n\n 3 third"
-        android:id="@+id/AntonymsItemsTV"/>
+        android:id="@+id/antonymsItemsTV"/>
 
 </LinearLayout>

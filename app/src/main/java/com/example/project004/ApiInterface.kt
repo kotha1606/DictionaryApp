@@ -7,5 +7,6 @@ import retrofit2.http.Path
 interface ApiInterface{
 
     @GET("en/{word}")
-    suspend fun dictcall(@Path("word") word:String):Response<List<DictmodelItem>>
+    suspend fun dictcall(@Path("word") word:String):Response<List<WordResult>>
+
 }
